@@ -5,6 +5,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './components/home-page/home-page.component';
 import { CommonUiModule } from './common-ui/common-ui.module';
+import { ChartModule } from './chart/chart.module';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,8 @@ import { CommonUiModule } from './common-ui/common-ui.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    CommonUiModule
+    CommonUiModule,
+    ChartModule
   ],
   providers: [],
   bootstrap: [AppComponent]

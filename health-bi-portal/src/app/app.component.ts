@@ -12,17 +12,16 @@ export class AppComponent {
   constructor(private router: Router) {
   }
 
-  title = 'health-bi-portal';
-  routesGroups: RoutesGroup[] = [
+  routesGroups: RoutesGroup[] = [ //todo move to service
     {
-      tytle: "קורונה",
+      title: "קורונה",
       routes: [
-        { lable: "דשבורד הקורונה הלאומי", path: "home" },
+        { lable: "דשבורד הקורונה הלאומי", path: "line-chart" },
         { lable: "מפת תחנות בדיקה", path: "header" }
       ]
     },
     {
-      tytle: "הנקה",
+      title: "הנקה",
       routes: [
         { lable: "מגמה שנתית", path: "home" },
         { lable: "אחוז הנקה", path: "header" }

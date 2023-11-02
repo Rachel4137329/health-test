@@ -13,6 +13,12 @@ export class SidebarComponent {
   @Output()
   onRouteSelected: EventEmitter<string> = new EventEmitter<string>();
 
+  isShowing: boolean = false;
+
+  toggle() {
+    this.isShowing = !this.isShowing;
+  }
+
   selectRoute(path: string) {
     this.onRouteSelected.emit(path);
   }
