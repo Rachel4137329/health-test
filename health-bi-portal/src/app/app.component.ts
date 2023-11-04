@@ -16,20 +16,20 @@ export class AppComponent {
     {
       title: "קורונה",
       routes: [
-        { lable: "דשבורד הקורונה הלאומי", path: "line-chart" },
+        { lable: "דשבורד הקורונה הלאומי", path: "chart/corona" },
         { lable: "מפת תחנות בדיקה", path: "header" }
       ]
     },
     {
       title: "הנקה",
       routes: [
-        { lable: "מגמה שנתית", path: "home" },
+        { lable: "מגמה שנתית", path: "chart/breastfeadingYearlyTrend" },
         { lable: "אחוז הנקה", path: "header" }
       ]
     }
   ]
 
   navigate(path: string) {
-    this.router.navigate([path]);
+    this.router.navigateByUrl(path);
   }
 }

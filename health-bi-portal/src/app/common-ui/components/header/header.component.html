@@ -1,5 +1,5 @@
 <mat-toolbar color="primary">
-    <button mat-icon-button matTooltip="Menu">
+    <button mat-icon-button matTooltip="Menu" *ngIf="isMenu" (click)="clickMenu()">
         <mat-icon>menu</mat-icon>
     </button>
     <span>ConcretePage.com</span>

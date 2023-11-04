@@ -1,5 +1,4 @@
-<app-header (click)="sidenav.toggle()"></app-header>
+<app-header (onMenuClick)="sidenav.toggle()"></app-header>
 <app-sidebar (onRouteSelected)="navigate($event)" [routesGroups]="routesGroups" #sidenav>
     <router-outlet></router-outlet>
 </app-sidebar>
-<app-home-page></app-home-page>
