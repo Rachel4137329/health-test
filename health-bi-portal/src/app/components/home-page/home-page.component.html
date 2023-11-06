@@ -1,1 +1,3 @@
-<p>home-page works!</p>
+<app-chart-ui *ngFor="let chartName of ChartNames | keyvalue" [chartName]="chartName.value"
+    routerLink="/chart/{{chartName.value}}" class="app-chart">
+</app-chart-ui>

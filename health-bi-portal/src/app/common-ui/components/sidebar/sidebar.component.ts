@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { RoutesGroup } from 'src/app/models/routes-group.model';
+import { RoutesGroup } from 'src/app/models/entities/routes-group.model';
 
 @Component({
   selector: 'app-sidebar',

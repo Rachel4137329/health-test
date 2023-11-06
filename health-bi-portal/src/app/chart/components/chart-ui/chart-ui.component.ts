@@ -2,22 +2,30 @@ import { Component, Input, OnInit } from '@angular/core';
 import * as Highcharts from 'highcharts';
 import { ActivatedRoute } from '@angular/router';
 import { ChartOptionsService } from '../../services/chart-options.service';
+import { ChartNames } from '../../models/enums/chart-names.enum';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-chart-ui',
   templateUrl: './chart-ui.component.html',
   styleUrls: ['./chart-ui.component.css']
 })
-export class ChartUiComponent {
+export class ChartUiComponent implements OnInit {
+
+  @Input()
+  chartName: ChartNames | undefined;
 
   highcharts = Highcharts;
 
-  chartOptions: any = {};
+  chartOptions: Observable<any> = new Observable<any>();
 
-  chartName: string = "";
+  constructor(private chartOptionsService: ChartOptionsService, private route: ActivatedRoute) { //todo other name to chartOptionsService
+  }
 
-  constructor(private chartOptionsService: ChartOptionsService, private route: ActivatedRoute) {
-    this.chartName += this.route.snapshot.paramMap.get('name'); //todo const?
-    this.chartOptions = chartOptionsService.getChartOptionsByName(this.chartName)
+  ngOnInit(): void {
+    this.chartName = this.chartName || <ChartNames>this.route.snapshot.paramMap.get('chartName');
+    this.chartOptions = this.chartName in ChartNames ?
+      this.chartOptionsService.getChartOptionsByName(this.chartName) :
+      this.chartOptions;
   }
 }

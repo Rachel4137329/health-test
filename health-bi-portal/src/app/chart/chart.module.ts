@@ -5,6 +5,8 @@ import { ChartUiComponent } from './components/chart-ui/chart-ui.component';
 import { MatCardModule } from '@angular/material/card';
 import { HttpService } from './services/http.service';
 import { ChartOptionsService } from './services/chart-options.service';
+import { HttpClientModule } from '@angular/common/http';
+import { ChartNames } from './models/enums/chart-names.enum';
 
 
 
@@ -15,7 +17,8 @@ import { ChartOptionsService } from './services/chart-options.service';
   imports: [
     CommonModule,
     HighchartsChartModule,
-    MatCardModule
+    MatCardModule,
+    HttpClientModule
   ],
   exports: [
     ChartUiComponent

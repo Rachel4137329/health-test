@@ -10,6 +10,9 @@ export class HeaderComponent {
   @Input()
   isMenu: boolean = true;
 
+  @Input()
+  headerText: string = "";
+
   @Output()
   onMenuClick: EventEmitter<any> = new EventEmitter<any>();
 
