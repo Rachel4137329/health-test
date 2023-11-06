@@ -19,13 +19,13 @@ export class ChartUiComponent implements OnInit {
 
   chartOptions: Observable<any> = new Observable<any>();
 
-  constructor(private chartOptionsService: ChartOptionsService, private route: ActivatedRoute) { //todo other name to chartOptionsService
+  constructor(private chartOptionsService: ChartOptionsService, private route: ActivatedRoute) {
   }
 
   ngOnInit(): void {
-    this.chartName = this.chartName || <ChartNames>this.route.snapshot.paramMap.get('chartName');
-    this.chartOptions = this.chartName in ChartNames ?
-      this.chartOptionsService.getChartOptionsByName(this.chartName) :
+    let name = this.chartName || <ChartNames>this.route.snapshot.paramMap.get('chartName');
+    this.chartOptions = name in ChartNames ?
+      this.chartOptionsService.getChartOptionsByName(name) :
       this.chartOptions;
   }
 }

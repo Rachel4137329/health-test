@@ -1,3 +1,12 @@
 .toolbar-item-spacer {
     flex: 1 1 auto;
 }
+
+.icon {
+    padding: 10px;
+    height: 42px;
+}
+
+.header-text {
+    font-weight: bold;
+}

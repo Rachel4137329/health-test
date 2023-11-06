@@ -4,7 +4,7 @@ import { HomePageComponent } from './components/home-page/home-page.component';
 import { HeaderComponent } from './common-ui/components/header/header.component';
 import { ChartUiComponent } from './chart/components/chart-ui/chart-ui.component';
 
-export const routes = [{ path: "", component: HomePageComponent }, { path: "chart/:chartName", component: ChartUiComponent }];
+const routes: Routes = [{ path: "", component: HomePageComponent }, { path: "chart/:chartName", component: ChartUiComponent }];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

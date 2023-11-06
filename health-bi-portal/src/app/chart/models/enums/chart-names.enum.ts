@@ -1,5 +1,6 @@
 export enum ChartNames {
     NursingYearlyTrend = "NursingYearlyTrend",
-    Institutes = "Institutes"
+    Institutes = "Institutes",
+    NursingPercent = "NursingPercent"
 }
 

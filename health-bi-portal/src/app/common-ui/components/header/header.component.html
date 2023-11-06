@@ -1,7 +1,10 @@
-<mat-toolbar color="primary">
-    <button mat-icon-button matTooltip="Menu" *ngIf="isMenu" (click)="clickMenu()">
+<mat-toolbar>
+    <button mat-icon-button matTooltip="Menu" *ngIf="isMenu" (click)="clickMenu()" class="icon">
         <mat-icon>menu</mat-icon>
     </button>
-    <span>{{headerText}}</span>
+    <img src="../assets/Israel.png" class="icon">
+    <img src="https://my.health.gov.il/Style%20Library/Images/Health/logo_MB.jpg" class="icon">
+
+    <span class="header-text">{{headerText}}</span>
     <span class="toolbar-item-spacer"></span>
 </mat-toolbar>

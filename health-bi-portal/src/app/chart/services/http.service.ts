@@ -6,7 +6,7 @@ import { Institutes } from '../models/entities/institutes.model';
 
 @Injectable()
 export class HttpService {
-  readonly baseUrl: string = "https://datadashboard.health.gov.il/api"; //TODO move to config file
+  readonly baseUrl: string = "https://datadashboard.health.gov.il/api";
 
   constructor(private http: HttpClient) { }
 

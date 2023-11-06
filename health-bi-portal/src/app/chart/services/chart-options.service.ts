@@ -3,7 +3,7 @@ import { HttpService } from './http.service';
 import { ChartNames } from '../models/enums/chart-names.enum';
 import { Nursing } from '../models/entities/nursing.model';
 import { CharData } from '../models/entities/char-data.model';
-import { Observable, map } from 'rxjs';
+import { Observable, from, map } from 'rxjs';
 import { Institutes } from '../models/entities/institutes.model';
 
 @Injectable()
@@ -11,7 +11,7 @@ export class ChartOptionsService {
 
   chartData: CharData[] = [];
 
-  readonly chartsOptions: Map<ChartNames, object> = new Map([
+  readonly chartsOptions: Map<ChartNames, any> = new Map([
     [
       ChartNames.NursingYearlyTrend,
       {
@@ -41,26 +41,18 @@ export class ChartOptionsService {
           text: 'הפרש ציון מהממוצע הארצי לפי מאפיני מוסד/אשפוז'
         },
         legend: {
-          // layout: 'vertical' as 'vertical',
-          // align: 'left' as 'left',
-          // verticalAlign: 'top' as 'top',
           x: 250,
           y: 100,
-          // floating: true,
           borderWidth: 1,
-          /*
-                backgroundColor: (
-                  (Highcharts.theme && Highcharts.theme.legendBackgroundColor) ||
-                  '#FFFFFF'), shadow: true*/
         },
         xAxis: {
-          categories: ['תנאים פיזיים', 'יעילות הטיפול', 'העצמת המטופל ', 'רצף טיפולי', 'מתן מידע', 'יחס וכבוד למטופל', 'נכונות להמליץ', 'מטופל בידיים טובות', 'שביעות רצון כללית'], // avoide duplicate arr
+          categories: ['תנאים פיזיים', 'יעילות הטיפול', 'העצמת המטופל ', 'רצף טיפולי', 'מתן מידע', 'יחס וכבוד למטופל', 'נכונות להמליץ', 'מטופל בידיים טובות', 'שביעות רצון כללית'],
           title: {
             text: null
           }
         },
         yAxis: {
-          min: 0, title: {
+          min: -5, title: {
             text: 'הפרש מהממוצע הארצי', align: 'high' as 'high'
           },
           labels: {
@@ -79,6 +71,49 @@ export class ChartOptionsService {
         },
       }
     ],
+    [
+      ChartNames.NursingPercent,
+      {
+        chart: {
+          type: "area"
+        },
+        title: {
+          text: 'תינוקות יונקים - אחוז הנקה לפי גיל'
+        },
+        xAxis: {
+          categories: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
+          title: {
+            text: 'גיל בחודשים'
+          },
+          tickmarkPlacement: 'on',
+        },
+        yAxis: {
+          title: {
+            text: '% מהתינוקות'
+          }
+        }
+        ,
+        tooltip: {
+          shared: true,
+          valueSuffix: ' %'
+        },
+        plotOptions: {
+          area: {
+            stacking: 'percent',
+            lineColor: '#666666',
+            lineWidth: 1,
+
+            marker: {
+              lineWidth: 1,
+              lineColor: '#666666'
+            }
+          }
+        },
+        credits: {
+          enabled: false
+        }
+      }
+    ]
   ]);
 
   constructor(private httpService: HttpService) {
@@ -95,23 +130,44 @@ export class ChartOptionsService {
         return this.httpService.getInstitutesData().pipe(
           map(data => this.mapDataInstitutes(name, data))
         );
-        break;
+      }
+      case ChartNames.NursingPercent: {
+        return this.httpService.getNursingData().pipe(
+          map(data => this.mapDataNursingPrecent(name, data))
+        );
       }
       default: {
-        return new Observable();
-        break;
+        return new Observable;
       }
     }
   }
 
+  mapDataNursingPrecent(name: ChartNames, data: Nursing[]): any {
+    let chartData: CharData[] = [];
+    const ages: number[] = this.chartsOptions.get(name)["xAxis"]['categories']
+    const measures: string[] = ["הנקה מלאה", "הנקה משולבת", "ללא הנקה"];
+    measures.forEach(measure => {
+      let dataByMeasure: Nursing[] = data.filter(a => a.measure == measure);
+      let chartDataElement: CharData = { name: measure, data: [] };
+      ages.forEach(age => {
+        chartDataElement.data.push((dataByMeasure.filter(a => a.age == age).length / data.filter(a => a.age == age).length) * 100);
+      }
+      );
+      chartData.push(chartDataElement);
+    });
+    let chartOptions: any = this.chartsOptions.get(name);
+    chartOptions.series = chartData as any;
+    return chartOptions;
+  }
+
   mapDataInstitutes(name: ChartNames, data: Institutes[]): any {
     let chartData: CharData[] = [];
-    const subjects: string[] = ['תנאים פיזיים', 'יעילות הטיפול', 'העצמת המטופל ', 'רצף טיפולי', 'מתן מידע', 'יחס וכבוד למטופל', 'נכונות להמליץ', 'מטופל בידיים טובות', 'שביעות רצון כללית'];
+    const subjects: string[] = this.chartsOptions.get(name)["xAxis"]['categories']
     const sizes: string[] = ['קטנים', 'מרכז על', 'בינוניים - גדולים'];
     data = data.filter(a => a.comparisonGroup == 'גודל מוסד');
     sizes.forEach(size => {
       let dataBySize: Institutes[] = data.filter(a => a.comparisonValue == size);
-      let chartDataElement: CharData = { name: size, data: [] }; // maybe can remove?
+      let chartDataElement: CharData = { name: size, data: [] };
       subjects.forEach(subject => {
         chartDataElement.data.push(dataBySize.filter(a => a.subject == subject).reduce((a, b) => a + <number>b.avgDiff, 0))
       }
@@ -125,7 +181,7 @@ export class ChartOptionsService {
 
   mapDataNursingYearlyTrend(name: ChartNames, data: Nursing[]): any {
     let chartData: CharData[] = [];
-    const years: number[] = [2016, 2017, 2018, 2019, 2020, 2021, 2022, 2023];
+    const years: number[] = this.chartsOptions.get(name)["xAxis"]['categories']
     const ages: number[] = [1, 3, 6, 12];
     data = data.filter(a => a.year != null && a.measure == "הנקה מלאה" && a.age != null);
     ages.forEach(age => {

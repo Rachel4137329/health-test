@@ -2,10 +2,3 @@
     height: 90%;
     margin: 0;
 }
-
-.app-sidenav-content {
-    display: flex;
-    height: 100%;
-    align-items: center;
-    justify-content: center;
-}
