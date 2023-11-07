@@ -1,0 +1,10 @@
+.app-chart {
+    width: 300px;
+    padding: 10px;
+}
+
+.home-page-content {
+    height: 100%;
+    display: flex;
+    flex-flow: row wrap;
+}

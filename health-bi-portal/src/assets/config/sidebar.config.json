@@ -1,0 +1,24 @@
+    [
+        {
+            "title": "הנקה",
+            "routes": [
+                {
+                    "lable": "מגמה שנתית",
+                    "path": "chart/NursingYearlyTrend"
+                },
+                {
+                    "lable": "אחוז הנקה",
+                    "path": "chart/NursingPercent"
+                }
+            ]
+        },
+        {
+            "title": "סקרי דעת קהל",
+            "routes": [
+                {
+                    "lable": "הפרש מהממוצע מוסד/אשפוז",
+                    "path": "chart/Institutes"
+                }
+            ]
+        }
+    ]
